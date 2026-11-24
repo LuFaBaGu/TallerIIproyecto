@@ -22,6 +22,8 @@ services:
       PORT: "3000"
       DB_FILE: /var/lib/licoreria/licoreria.db
       PYTHON_EXECUTABLE: python3.10
+      ADMIN_USER: ${ADMIN_USER:?Define ADMIN_USER en el archivo .env}
+      ADMIN_PASS: ${ADMIN_PASS:?Define ADMIN_PASS en el archivo .env}
     volumes:
       - sqlite-data:/var/lib/licoreria
     depends_on:

@@ -31,7 +31,17 @@ La aplicación principal funciona sin instalar Python. Python, NumPy y Joblib so
 
 ## Iniciar con Docker
 
-Se requiere Docker con Docker Compose. Desde la raíz del repositorio, ejecuta:
+Se requiere Docker con Docker Compose. Antes del primer inicio, crea el archivo `.env` a partir de la plantilla:
+
+```bash
+cp .env.example .env
+```
+
+Edita `.env` y define `ADMIN_USER` y `ADMIN_PASS` con tus propias credenciales. No subas `.env` a GitHub; está excluido por `.gitignore`.
+
+En Windows PowerShell, puedes crear la copia con `Copy-Item .env.example .env`.
+
+Luego, desde la raíz del repositorio, ejecuta:
 
 ```bash
 docker compose up --build
@@ -57,6 +67,8 @@ Para reconstruir las imágenes después de cambiar el código:
 docker compose up --build
 ```
 
+Compose carga las variables de `.env` y las entrega al backend. Si falta alguna, el inicio falla en vez de utilizar credenciales predeterminadas.
+
 ## Instalación y ejecución
 
 Clona el repositorio y entra en la carpeta del proyecto:
@@ -74,8 +86,18 @@ npm install
 
 Inicia el servidor:
 
-```bash
+En PowerShell, define las credenciales en la terminal:
+
+```powershell
+$env:ADMIN_USER = "<tu_usuario>"
+$env:ADMIN_PASS = "<tu_contraseña>"
 node index.js
+```
+
+En Bash, puedes iniciarlo así:
+
+```bash
+ADMIN_USER="<tu_usuario>" ADMIN_PASS="<tu_contraseña>" node index.js
 ```
 
 Abre [http://localhost:3000](http://localhost:3000) en el navegador. Si el puerto 3000 está ocupado, puedes elegir otro:
@@ -84,7 +106,7 @@ Abre [http://localhost:3000](http://localhost:3000) en el navegador. Si el puert
 PORT=3001 node index.js
 ```
 
-En PowerShell, usa `$env:PORT = "3001"` antes de ejecutar `node index.js`.
+En PowerShell, configura también `$env:PORT = "3001"` antes de ejecutar `node index.js`.
 
 ## Habilitar el pronóstico
 
@@ -109,12 +131,7 @@ El pronóstico depende de `modelo/pronostico_ventas.joblib` y del historial sint
 
 ## Acceso de administración
 
-En el sitio, selecciona **Administración**. Las credenciales predeterminadas del proyecto son:
-
-- Usuario: `admin`
-- Contraseña: `aaa123`
-
-Son credenciales de demostración definidas en `index.js`; no son adecuadas para una aplicación publicada o de producción.
+En el sitio, selecciona **Administración** e ingresa el usuario y la contraseña configurados para el proceso. Con Docker, se definen en `.env`; al ejecutar Node directamente, deben estar en las variables de entorno de la terminal. El proyecto ya no incluye credenciales predeterminadas en el código ni en la interfaz.
 
 ## Base de datos y datos
 
@@ -135,6 +152,11 @@ dataset/
   inventory-history.csv
 modelo/
   pronostico_ventas.joblib
+.env.example
+docker-compose.yml
+Dockerfile.backend
+Dockerfile.frontend
+nginx.conf
 public/
   admin.html
   index.html

@@ -11,6 +11,11 @@ const PORT = process.env.PORT || 3000;
 const DATA_FILE = path.join(__dirname, 'data', 'products.json');
 const CATEGORIES_FILE = path.join(__dirname, 'data', 'categories.json');
 const DB_FILE = process.env.DB_FILE || path.join(__dirname, 'data', 'licoreria.db');
+const ADMIN_USER = process.env.ADMIN_USER;
+const ADMIN_PASS = process.env.ADMIN_PASS;
+if (!ADMIN_USER || !ADMIN_PASS) {
+    throw new Error('Configura ADMIN_USER y ADMIN_PASS en el entorno antes de iniciar el servidor.');
+}
 
 const db = new Database(DB_FILE);
 db.pragma('foreign_keys = ON');
@@ -286,10 +291,6 @@ function scheduleDailyInventorySnapshot() {
 seedSyntheticInventoryHistory();
 recordDailyInventorySnapshot();
 scheduleDailyInventorySnapshot();
-
-// Credenciales del Administrador (Simulado, cambiar en producción)
-const ADMIN_USER = 'admin';
-const ADMIN_PASS = 'aaa123';
 
 // Almacén en memoria de sesiones activas
 const activeSessions = new Set();
@@ -992,7 +993,5 @@ app.listen(PORT, () => {
     console.log(`  Licorería Premium Backend está en funcionamiento`.bold.green);
     console.log(`  Servidor corriendo en: ` + `http://localhost:${PORT}`.underline.blue);
     console.log(`  Base de datos SQLite: ` + DB_FILE);
-    console.log(`  Usuario Administrador: ` + `${ADMIN_USER}`.yellow);
-    console.log(`  Contraseña Admin:      ` + `${ADMIN_PASS}`.yellow);
     console.log(`=================================================\n`.cyan);
 });
