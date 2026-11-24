@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const DATA_FILE = path.join(__dirname, 'data', 'products.json');
 const CATEGORIES_FILE = path.join(__dirname, 'data', 'categories.json');
-const DB_FILE = path.join(__dirname, 'data', 'licoreria.db');
+const DB_FILE = process.env.DB_FILE || path.join(__dirname, 'data', 'licoreria.db');
 
 const db = new Database(DB_FILE);
 db.pragma('foreign_keys = ON');

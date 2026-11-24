@@ -1,0 +1,10 @@
+.git
+.gitignore
+.dockerignore
+node_modules
+**/node_modules
+data/*.db
+data/*.db-*
+__pycache__
+**/__pycache__
+*.py[cod]

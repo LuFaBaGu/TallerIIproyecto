@@ -29,6 +29,34 @@ Aplicación web académica para administrar y explorar el catálogo de una licor
 
 La aplicación principal funciona sin instalar Python. Python, NumPy y Joblib solo son necesarios para utilizar la pestaña **Pronóstico**.
 
+## Iniciar con Docker
+
+Se requiere Docker con Docker Compose. Desde la raíz del repositorio, ejecuta:
+
+```bash
+docker compose up --build
+```
+
+Abre [http://localhost:8080](http://localhost:8080). Docker Compose levanta estos servicios:
+
+- `frontend`: Nginx sirve los archivos web y redirige las solicitudes `/api` al backend.
+- `backend`: Node.js/Express atiende la API, accede a SQLite y ejecuta el modelo con Python 3.10.20.
+- `db`: mantiene disponible el volumen persistente que contiene el archivo SQLite.
+
+SQLite es una base de datos embebida en un archivo, no un servidor SQL. Por eso el servicio `db` administra almacenamiento persistente compartido; el backend abre directamente el archivo `licoreria.db`. Los datos sobreviven al reinicio o recreación de los contenedores mientras se conserve el volumen.
+
+Para detener los servicios:
+
+```bash
+docker compose down
+```
+
+Para reconstruir las imágenes después de cambiar el código:
+
+```bash
+docker compose up --build
+```
+
 ## Instalación y ejecución
 
 Clona el repositorio y entra en la carpeta del proyecto:
