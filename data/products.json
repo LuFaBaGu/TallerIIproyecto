@@ -1,0 +1,57 @@
+[
+  {
+    "id": "1",
+    "name": "Vino Aranjuez Terruño",
+    "categoryId": "cat_1",
+    "description": "Vino Aranjuez Terruño Tinto 700 ml, vino boliviano de altura con sabor elegante y equilibrado, ideal para ocasiones especiales.",
+    "price": 28,
+    "stock": 20,
+    "image": "/images/AranjuezTerruno.png",
+    "abv": "14.5%",
+    "volume": "700ml"
+  },
+  {
+    "id": "2",
+    "name": "Whisky Blue Label",
+    "categoryId": "cat_2",
+    "description": "Whisky de calidad superior.",
+    "price": 800,
+    "stock": 10,
+    "image": "/images/BlueLabel.png",
+    "abv": "40.0%",
+    "volume": "200ml"
+  },
+  {
+    "id": "4",
+    "name": "Cerveza Paceña",
+    "categoryId": "cat_4",
+    "description": "Cerveza boliviana.",
+    "price": 18,
+    "stock": 200,
+    "image": "/images/pacena.png",
+    "abv": "4.8%",
+    "volume": "620ml"
+  },
+  {
+    "id": "1781783885710",
+    "name": "Singani Casa Real Etiqueta Roja",
+    "categoryId": "cat_1781783801771",
+    "description": "Singani",
+    "price": 65,
+    "stock": 20,
+    "image": "/images/casarealrojo750.png",
+    "abv": "10",
+    "volume": "750ml"
+  },
+  {
+    "id": "1782390715810",
+    "name": "nombre",
+    "categoryId": "cat_1",
+    "description": "aaa",
+    "price": 15,
+    "stock": 10,
+    "image": "/images/placeholder.png",
+    "abv": "10",
+    "volume": "200ml"
+  }
+]

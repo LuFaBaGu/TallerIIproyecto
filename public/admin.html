@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vitis & Co. - Administración</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+
+  <!-- NOTIFICACIÓN (TOAST) -->
+  <div id="toast" class="toast"></div>
+
+  <!-- NAVEGACIÓN -->
+  <header>
+    <div class="logo-container">
+      <div class="logo-icon">V</div>
+      <div class="logo-text">Vitis <span>& Co.</span></div>
+    </div>
+    <nav>
+      <a href="/" class="nav-link">Volver al Catálogo</a>
+      <button class="btn-secondary" id="logout-btn"
+        style="display: none; padding: 0.4rem 1rem; font-size: 0.85rem;">Cerrar Sesión</button>
+    </nav>
+  </header>
+
+  <main class="admin-container">
+
+    <!-- PANTALLA DE INICIO DE SESIÓN -->
+    <section class="login-card" id="login-section">
+      <h2>Acceso Administrativo</h2>
+      <p>Ingrese sus credenciales de administrador</p>
+
+      <div class="error-message" id="login-error">Usuario o contraseña incorrectos.</div>
+
+      <form id="login-form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="username">Usuario</label>
+          <input type="text" id="username" class="form-control" placeholder="Ej: admin" required
+            autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" class="form-control" placeholder="••••••••" required
+            autocomplete="current-password">
+        </div>
+        <button type="submit" class="login-btn">Iniciar Sesión</button>
+      </form>
+
+      <div
+        style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-light); text-align: center; font-size: 0.8rem; color: var(--text-muted);">
+        <strong>Credenciales por defecto:</strong><br>
+        Usuario: <code style="color: var(--primary);">admin</code><br>
+        Contraseña: <code style="color: var(--primary);">aaa123</code>
+      </div>
+    </section>
+
+    <!-- PANEL DE ADMINISTRACIÓN (DASHBOARD) -->
+    <section class="admin-dashboard" id="dashboard-section">
+      <div class="admin-header" style="border-bottom: none; padding-bottom: 0.5rem;">
+        <div>
+          <h1>Panel de Control</h1>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Gestión del catálogo en tiempo real</p>
+        </div>
+      </div>
+
+      <!-- PESTAÑAS (TABS) -->
+      <div class="tab-container">
+        <button class="tab-btn active" id="tab-btn-products" onclick="switchTab('products')">Licores</button>
+        <button class="tab-btn" id="tab-btn-categories" onclick="switchTab('categories')">Categorías</button>
+        <button class="tab-btn" id="tab-btn-orders" onclick="switchTab('orders')">Pedidos</button>
+        <button class="tab-btn" id="tab-btn-reports" onclick="switchTab('reports')">Reportes</button>
+        <button class="tab-btn" id="tab-btn-forecast" onclick="switchTab('forecast')">Pronóstico</button>
+      </div>
+
+      <!-- SECCIÓN DE PRODUCTOS (LICORES) -->
+      <div id="section-products" class="admin-section active" style="margin-top: 1.5rem;">
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 1.5rem;">
+          <button class="btn-primary" id="add-product-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+              stroke="currentColor" width="18" height="18">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            Añadir Producto
+          </button>
+        </div>
+
+        <div class="table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Categoría</th>
+                <th>Volumen</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th style="width: 120px; text-align: center;">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="admin-table-body">
+              <tr>
+                <td colspan="6" style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                  Cargando listado de inventario...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECCIÓN DE CATEGORÍAS -->
+      <div id="section-categories" class="admin-section" style="margin-top: 1.5rem;">
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 1.5rem;">
+          <button class="btn-primary" id="add-category-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+              stroke="currentColor" width="18" height="18">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            Añadir Categoría
+          </button>
+        </div>
+
+        <div class="table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre de la Categoría</th>
+                <th style="width: 120px; text-align: center;">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="admin-categories-table-body">
+              <tr>
+                <td colspan="3" style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                  Cargando listado de categorías...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- HISTORIAL DE PEDIDOS -->
+      <div id="section-orders" class="admin-section" style="margin-top: 1.5rem;">
+        <div class="table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Número</th>
+                <th>Fecha</th>
+                <th>Productos y cantidades</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="admin-orders-table-body">
+              <tr>
+                <td colspan="6" style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                  Seleccione la pestaña Pedidos para cargar el historial.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- REPORTES -->
+      <div id="section-reports" class="admin-section" style="margin-top: 1.5rem;">
+        <div class="report-toolbar">
+          <label for="report-period">Período de ventas</label>
+          <select id="report-period" class="form-control">
+            <option value="today">Hoy</option>
+            <option value="7d">Últimos 7 días</option>
+            <option value="30d" selected>Últimos 30 días</option>
+            <option value="all">Todo el historial</option>
+          </select>
+          <button type="button" class="btn-secondary" id="download-inventory-history">
+            Descargar dataset CSV
+          </button>
+        </div>
+        <div id="report-summary" class="report-summary" aria-live="polite"></div>
+
+        <section class="report-section">
+          <h2>Ventas por día</h2>
+          <div class="table-container report-table-container">
+            <table class="admin-table">
+              <thead>
+                <tr><th>Fecha</th><th>Pedidos</th><th>Total</th></tr>
+              </thead>
+              <tbody id="report-sales-body">
+                <tr><td colspan="3">Cargando reporte...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="report-section">
+          <h2>Productos más vendidos</h2>
+          <div class="table-container report-table-container">
+            <table class="admin-table">
+              <thead>
+                <tr><th>Producto</th><th>Unidades</th><th>Ventas</th></tr>
+              </thead>
+              <tbody id="report-top-products-body">
+                <tr><td colspan="3">Cargando reporte...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="report-section">
+          <h2>Productos con poco stock (5 unidades o menos)</h2>
+          <div class="table-container report-table-container">
+            <table class="admin-table">
+              <thead>
+                <tr><th>Producto</th><th>Categoría</th><th>Stock disponible</th></tr>
+              </thead>
+              <tbody id="report-low-stock-body">
+                <tr><td colspan="3">Cargando reporte...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- PRONÓSTICO DE VENTAS -->
+      <div id="section-forecast" class="admin-section" style="margin-top: 1.5rem;">
+        <div class="report-toolbar">
+          <div>
+            <h2>Unidades esperadas por producto</h2>
+            <p class="forecast-note">Pronóstico para los próximos 7 días, calculado con el historial sintético del modelo.</p>
+          </div>
+          <button type="button" class="btn-primary" id="run-forecast">Generar pronóstico</button>
+        </div>
+        <p id="forecast-status" class="forecast-status" aria-live="polite">
+          Seleccione “Generar pronóstico” para ejecutar el modelo.
+        </p>
+
+        <section class="report-section">
+          <h2>Total estimado por producto (7 días)</h2>
+          <div class="table-container report-table-container">
+            <table class="admin-table">
+              <thead>
+                <tr><th>Producto</th><th>Total estimado</th></tr>
+              </thead>
+              <tbody id="forecast-totals-body">
+                <tr><td colspan="2">Aún no se ha generado el pronóstico.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="report-section">
+          <h2>Detalle diario</h2>
+          <div class="table-container report-table-container">
+            <table class="admin-table">
+              <thead>
+                <tr><th>Producto</th><th>Fecha</th><th>Unidades esperadas</th></tr>
+              </thead>
+              <tbody id="forecast-daily-body">
+                <tr><td colspan="3">Aún no se ha generado el pronóstico.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="forecast-unsupported-section" class="report-section" hidden>
+          <h2>Productos fuera del modelo</h2>
+          <p>Estos productos no estaban disponibles cuando se entrenó el modelo.</p>
+          <ul id="forecast-unsupported-list"></ul>
+        </section>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FORMULARIO MODAL (AGREGAR / EDITAR PRODUCTO) -->
+  <div class="modal" id="form-modal">
+    <div class="modal-content form-modal-content">
+      <div class="modal-header">
+        <h3 id="form-modal-title">Añadir Nuevo Producto</h3>
+        <button class="modal-close-btn" id="form-modal-close-btn" style="position: static; width: 32px; height: 32px;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+            stroke="currentColor" width="16" height="16">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <form id="product-form" onsubmit="saveProduct(event)">
+        <input type="hidden" id="product-id">
+
+        <div class="form-body">
+          <div class="form-group">
+            <label for="p-name">Nombre del Producto</label>
+            <input type="text" id="p-name" class="form-control" required placeholder="Ej: Cabernet Sauvignon Reserva">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="p-category">Categoría</label>
+              <select id="p-category" class="form-control" required>
+                <option value="">Seleccionar categoría...</option>
+                <!-- Se poblará dinámicamente -->
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="p-volume">Volumen (Contenido)</label>
+              <input type="text" id="p-volume" class="form-control" placeholder="Ej: 750ml o 330ml">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="p-price">Precio ($)</label>
+              <input type="number" id="p-price" class="form-control" step="0.01" min="0.01" required placeholder="0.00">
+            </div>
+
+            <div class="form-group">
+              <label for="p-stock">Stock Inicial</label>
+              <input type="number" id="p-stock" class="form-control" min="0" required placeholder="0">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="p-abv">Graduación Alcohólica (ABV %)</label>
+              <input type="text" id="p-abv" class="form-control" placeholder="Ej: 14.5% o 40%">
+            </div>
+
+            <div class="form-group">
+              <label for="p-image">URL de Imagen</label>
+              <input type="text" id="p-image" class="form-control" placeholder="Ej: /images/mi_licor.jpg">
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="p-desc">Descripción</label>
+            <textarea id="p-desc" class="form-control" rows="4"
+              placeholder="Escriba las notas de cata y detalles del producto..."></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="form-cancel-btn">Cancelar</button>
+          <button type="submit" class="btn-primary">Guardar Producto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- FORMULARIO MODAL DE CATEGORÍA -->
+  <div class="modal" id="category-modal">
+    <div class="modal-content form-modal-content" style="max-width: 450px;">
+      <div class="modal-header">
+        <h3 id="category-modal-title">Añadir Categoría</h3>
+        <button class="modal-close-btn" id="category-modal-close-btn"
+          style="position: static; width: 32px; height: 32px;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+            stroke="currentColor" width="16" height="16">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <form id="category-form" onsubmit="saveCategory(event)">
+        <input type="hidden" id="category-id">
+        <div class="form-body">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="c-name">Nombre de la Categoría</label>
+            <input type="text" id="c-name" class="form-control" required placeholder="Ej: Tequila">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="category-cancel-btn">Cancelar</button>
+          <button type="submit" class="btn-primary">Guardar Categoría</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">Vitis <span>& Co.</span></div>
+      <p>&copy; 2026 Vitis & Co. Todos los derechos reservados. El consumo nocivo de alcohol es perjudicial para la
+        salud.</p>
+    </div>
+  </footer>
+
+  <script src="/js/admin.js"></script>
+</body>
+
+</html>

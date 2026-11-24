@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vitis & Co. - Boutique de Licores Premium</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- NOTIFICACIÓN (TOAST) -->
+  <div id="toast" class="toast"></div>
+
+  <!-- NAVEGACIÓN -->
+  <header>
+    <div class="logo-container">
+      <div class="logo-icon">V</div>
+      <div class="logo-text">Vitis <span>& Co.</span></div>
+    </div>
+    <nav>
+      <a href="#" class="nav-link">Catálogo</a>
+      <a href="/admin.html" class="nav-link">Administración</a>
+      <button class="cart-icon-btn" id="cart-toggle-btn" aria-label="Ver carrito">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+        </svg>
+        <span class="cart-badge" id="cart-count">0</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- SECCIÓN HÉROE / BIENVENIDA -->
+  <section class="hero-section">
+    <p class="hero-subtitle">Colección Exclusiva</p>
+    <h1 class="hero-title">El Arte del Buen Beber</h1>
+    <p class="hero-description">Explore nuestra fina selección de vinos maduros, destilados premium y cervezas artesanales curadas especialmente para paladares exigentes.</p>
+  </section>
+
+  <!-- CONTROLES: BÚSQUEDA Y FILTROS -->
+  <section class="controls-container">
+    <div class="search-box">
+      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.637 10.637Z" />
+      </svg>
+      <input type="text" id="search-input" class="search-input" placeholder="Buscar por nombre o descripción...">
+    </div>
+    
+    <div class="filter-categories" id="categories-container">
+      <!-- Se cargará dinámicamente -->
+    </div>
+  </section>
+
+  <!-- GRID DE PRODUCTOS -->
+  <main class="products-container">
+    <div class="products-grid" id="products-grid">
+      <!-- Los productos se cargarán dinámicamente mediante JS -->
+      <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted);">
+        Cargando catálogo exclusivo...
+      </div>
+    </div>
+  </main>
+
+  <!-- VENTANA MODAL (DETALLE DE PRODUCTO) -->
+  <div class="modal" id="product-modal">
+    <div class="modal-content">
+      <button class="modal-close-btn" id="modal-close-btn" aria-label="Cerrar modal">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="18" height="18">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <div class="modal-image-side">
+        <img src="" alt="" id="modal-image" class="modal-img">
+      </div>
+      <div class="modal-info-side">
+        <span class="modal-category" id="modal-category">Vino</span>
+        <h2 class="modal-title" id="modal-title">Nombre del Licor</h2>
+        <div class="modal-specs">
+          <div class="modal-spec-item">Graduación: <strong id="modal-abv">14%</strong></div>
+          <div class="modal-spec-item">Contenido: <strong id="modal-volume">750ml</strong></div>
+        </div>
+        <p class="modal-desc" id="modal-desc">Descripción detallada del producto.</p>
+        <div class="modal-action-row">
+          <span class="modal-price" id="modal-price">$0.00</span>
+          <button class="modal-btn" id="modal-add-btn">Añadir al Carrito</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARRITO DE COMPRAS LATERAL (SIMULACIÓN CLIENTE) -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <div class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+      <h2 class="cart-title">Su Carrito</h2>
+      <button class="cart-close-btn" id="cart-close-btn" aria-label="Cerrar carrito">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="20" height="20">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    
+    <div class="cart-items-container" id="cart-items-container">
+      <!-- Se llenará mediante JS -->
+      <div class="cart-empty-message">Su carrito está vacío.</div>
+    </div>
+    
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Subtotal</span>
+        <span class="cart-total-price" id="cart-total-price">$0.00</span>
+      </div>
+      <p class="cart-payment-note">El pago todavía no se procesa en línea.</p>
+      <button class="checkout-btn" id="checkout-btn">Confirmar pedido</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">Vitis <span>& Co.</span></div>
+      <div class="footer-links">
+        <a href="#" class="footer-link">Términos de Servicio</a>
+        <a href="#" class="footer-link">Política de Privacidad</a>
+        <a href="/admin.html" class="footer-link">Acceso Admin</a>
+      </div>
+      <p>&copy; 2026 Vitis & Co. Todos los derechos reservados. El consumo nocivo de alcohol es perjudicial para la salud.</p>
+    </div>
+  </footer>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
