@@ -41,6 +41,10 @@ db.exec(`
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         status TEXT NOT NULL DEFAULT 'confirmed',
         total_cents INTEGER NOT NULL CHECK (total_cents >= 0),
+        customer_name TEXT,
+        customer_phone TEXT,
+        customer_address TEXT,
+        privacy_consent_at TEXT,
         created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
     );
 
@@ -73,6 +77,13 @@ db.exec(`
         value TEXT NOT NULL
     );
 `);
+
+const orderColumns = new Set(db.pragma('table_info(orders)').map(column => column.name));
+for (const column of ['customer_name', 'customer_phone', 'customer_address', 'privacy_consent_at']) {
+    if (!orderColumns.has(column)) {
+        db.exec(`ALTER TABLE orders ADD COLUMN ${column} TEXT`);
+    }
+}
 
 db.prepare("UPDATE orders SET status = 'confirmed' WHERE status = 'simulated'").run();
 
@@ -552,6 +563,35 @@ app.post('/api/orders', (req, res, next) => {
         return res.status(400).json({ success: false, error: 'El carrito está vacío' });
     }
 
+    const customerInput = req.body.customer === undefined ? {} : req.body.customer;
+    if (!customerInput || typeof customerInput !== 'object' || Array.isArray(customerInput)) {
+        return res.status(400).json({ success: false, error: 'Los datos del cliente no son válidos' });
+    }
+    const customerFields = [
+        ['name', 'Nombre', 120],
+        ['phone', 'Teléfono', 40],
+        ['address', 'Dirección', 250]
+    ];
+    const customer = {};
+    for (const [field, label, maxLength] of customerFields) {
+        const value = customerInput[field];
+        if (value !== undefined && value !== null && typeof value !== 'string') {
+            return res.status(400).json({ success: false, error: `${label} debe ser texto` });
+        }
+        const normalized = typeof value === 'string' ? value.trim() : '';
+        if (normalized.length > maxLength) {
+            return res.status(400).json({ success: false, error: `${label} no puede superar ${maxLength} caracteres` });
+        }
+        customer[field] = normalized || null;
+    }
+    if (req.body.privacyConsent !== true) {
+        return res.status(400).json({
+            success: false,
+            error: 'Debes aceptar la Política de Privacidad para confirmar el pedido.'
+        });
+    }
+    const privacyConsentAt = new Date().toISOString();
+
     const quantities = new Map();
     for (const item of items) {
         if (!item || typeof item.id !== 'string' || !item.id.trim() ||
@@ -595,9 +635,11 @@ app.post('/api/orders', (req, res, next) => {
         }
 
         const orderResult = db.prepare(`
-            INSERT INTO orders (status, total_cents)
-            VALUES ('confirmed', ?)
-        `).run(totalCents);
+            INSERT INTO orders (
+                status, total_cents, customer_name, customer_phone, customer_address,
+                privacy_consent_at
+            ) VALUES ('confirmed', ?, ?, ?, ?, ?)
+        `).run(totalCents, customer.name, customer.phone, customer.address, privacyConsentAt);
         const orderId = Number(orderResult.lastInsertRowid);
         const insertOrderItem = db.prepare(`
             INSERT INTO order_items (
@@ -634,6 +676,7 @@ app.post('/api/orders', (req, res, next) => {
             status: order.status,
             total: order.total_cents / 100,
             createdAt: order.created_at,
+            customer: { ...customer, consentAt: privacyConsentAt },
             items: orderProducts.map(product => ({
                 productId: product.id,
                 name: product.name,
@@ -662,6 +705,10 @@ app.get('/api/orders', authMiddleware, (req, res) => {
             orders.status,
             orders.total_cents,
             orders.created_at,
+            orders.customer_name,
+            orders.customer_phone,
+            orders.customer_address,
+            orders.privacy_consent_at,
             order_items.id AS itemId,
             order_items.product_name,
             order_items.quantity,
@@ -680,6 +727,12 @@ app.get('/api/orders', authMiddleware, (req, res) => {
                 status: row.status,
                 total: row.total_cents / 100,
                 createdAt: row.created_at,
+                customer: {
+                    name: row.customer_name,
+                    phone: row.customer_phone,
+                    address: row.customer_address,
+                    consentAt: row.privacy_consent_at
+                },
                 items: []
             });
         }

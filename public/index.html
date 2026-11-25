@@ -105,6 +105,24 @@
     </div>
     
     <div class="cart-footer">
+      <div class="checkout-customer-fields">
+        <h3>Datos de contacto <span>(opcionales)</span></h3>
+        <label for="checkout-customer-name">Nombre</label>
+        <input type="text" id="checkout-customer-name" class="form-control" maxlength="120"
+          autocomplete="name" placeholder="Nombre para el pedido">
+        <label for="checkout-customer-phone">Teléfono</label>
+        <input type="tel" id="checkout-customer-phone" class="form-control" maxlength="40"
+          autocomplete="tel" placeholder="Teléfono de contacto">
+        <label for="checkout-customer-address">Dirección</label>
+        <input type="text" id="checkout-customer-address" class="form-control" maxlength="250"
+          autocomplete="street-address" placeholder="Dirección de entrega">
+        <p>Se guardarán con el pedido para facilitar el contacto y la entrega.</p>
+        <label class="privacy-consent">
+          <input type="checkbox" id="checkout-privacy-consent">
+          <span>Autorizo el tratamiento de los datos de este pedido y de los datos de contacto que decida proporcionar, según la
+            <a href="/privacy.html" target="_blank" rel="noopener">Política de Privacidad</a>.</span>
+        </label>
+      </div>
       <div class="cart-total-row">
         <span>Subtotal</span>
         <span class="cart-total-price" id="cart-total-price">$0.00</span>
@@ -119,14 +137,16 @@
     <div class="footer-content">
       <div class="footer-logo">Vitis <span>& Co.</span></div>
       <div class="footer-links">
-        <a href="#" class="footer-link">Términos de Servicio</a>
-        <a href="#" class="footer-link">Política de Privacidad</a>
+        <a href="/terms.html" class="footer-link">Términos y Condiciones de Uso</a>
+        <a href="/privacy.html" class="footer-link">Política de Privacidad</a>
+        <a href="/cookies.html" class="footer-link">Política de Cookies</a>
         <a href="/admin.html" class="footer-link">Acceso Admin</a>
       </div>
       <p>&copy; 2026 Vitis & Co. Todos los derechos reservados. El consumo nocivo de alcohol es perjudicial para la salud.</p>
     </div>
   </footer>
 
-  <script src="/js/app.js"></script>
+  <script src="/js/storage-notice.js?v=storage-notice-20261124"></script>
+  <script src="/js/app.js?v=privacy-consent-20261124"></script>
 </body>
 </html>

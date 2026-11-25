@@ -6,9 +6,13 @@ Aplicación web académica para administrar y explorar el catálogo de una licor
 
 - Catálogo de productos con búsqueda y filtros por categoría.
 - Carrito almacenado en el navegador.
-- Confirmación de pedidos: el servidor verifica precios y existencias, registra el pedido y descuenta el inventario dentro de una transacción.
+- Confirmación de pedidos: el servidor verifica precios y existencias, registra el pedido y descuenta el inventario dentro de una transacción. El cliente puede añadir nombre, teléfono y dirección de forma opcional.
+- Consentimiento expreso antes de registrar cada pedido; nombre, teléfono y dirección de contacto son opcionales.
+- Página de Política de Privacidad accesible desde el footer.
+- Aviso de almacenamiento técnico y Política de Cookies con las claves del navegador, su finalidad y duración.
 - Administración protegida para gestionar productos y categorías.
-- Historial y cancelación de pedidos. Al cancelar, el inventario se repone una sola vez.
+- Historial administrativo de pedidos, incluidos los datos de contacto proporcionados, y cancelación de pedidos. Al cancelar, el inventario se repone una sola vez.
+- Página de Términos y Condiciones de Uso accesible desde el footer.
 - Reportes de ventas por período, productos más vendidos y productos con poco stock.
 - Historial diario de inventario y exportación en CSV desde administración.
 - Pronóstico de unidades por producto para los próximos 7 días usando el modelo entrenado incluido en el proyecto.
@@ -140,6 +144,7 @@ La base de datos SQLite se encuentra en `data/licoreria.db`. Al iniciar, el serv
 El proyecto incluye un historial sintético para practicar el análisis y generar pronósticos. El modelo fue entrenado con datos sintéticos, por lo que sus resultados son demostrativos y no representan una predicción validada de ventas reales. Los snapshots observados se registran mientras el servidor está activo y ante cambios de inventario; no reconstruyen los días en que estuvo apagado.
 
 El checkout registra pedidos y actualiza existencias, pero no procesa pagos en línea.
+El nombre, teléfono y dirección son opcionales; cuando se proporcionan, se almacenan junto al pedido y aparecen en el historial administrativo. Los pedidos creados antes de agregar estos campos no tienen datos de contacto. Deben facilitarse solo los datos necesarios para coordinar el pedido.
 
 ## Estructura principal
 

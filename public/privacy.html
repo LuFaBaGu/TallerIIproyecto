@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Política de privacidad y tratamiento de datos personales de Vitis & Co.">
+  <title>Política de Privacidad - Vitis & Co.</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+  <header>
+    <div class="logo-container">
+      <div class="logo-icon">V</div>
+      <div class="logo-text">Vitis <span>& Co.</span></div>
+    </div>
+    <nav>
+      <a href="/" class="nav-link">Volver al catálogo</a>
+    </nav>
+  </header>
+
+  <main class="terms-page">
+    <article class="terms-card">
+      <p class="terms-eyebrow">Vitis & Co. · Proyecto académico</p>
+      <h1>Política de Privacidad y Tratamiento de Datos Personales</h1>
+      <p class="terms-updated">Última actualización: 24 de noviembre de 2026</p>
+      <p>
+        Esta política explica qué información utiliza Vitis & Co., para qué la
+        necesita, cómo se protege y cómo puedes solicitar su corrección o eliminación.
+        La plataforma es un proyecto académico demostrativo.
+      </p>
+
+      <section>
+        <h2>1. Responsable y contacto</h2>
+        <p>
+          El responsable de administrar los datos que la aplicación registra es
+          <strong>Luis Facundo Barrios Gutiérrez</strong>, estudiante y desarrollador
+          del proyecto.
+        </p>
+        <p>
+          Para consultas, correcciones o solicitudes de eliminación, escribe a
+          <a href="mailto:darelik015@gmail.com">darelik015@gmail.com</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>2. Datos recopilados y minimización</h2>
+        <p>La aplicación utiliza únicamente los datos necesarios para sus funciones:</p>
+        <ul>
+          <li>
+            <strong>Datos de contacto opcionales:</strong> nombre, teléfono y dirección
+            que el cliente decida proporcionar al realizar un pedido. No se solicita
+            correo electrónico al cliente en el formulario de compra.
+          </li>
+          <li>
+            <strong>Datos del pedido:</strong> número, fecha, productos, cantidades,
+            precios, total y estado. Se necesitan para registrar el pedido, actualizar
+            existencias y generar el historial y los reportes administrativos.
+          </li>
+          <li>
+            <strong>Datos de acceso administrativo:</strong> nombre de usuario y un
+            token temporal de sesión. La contraseña administrativa se configura en
+            variables de entorno y no se guarda en la tabla de pedidos.
+          </li>
+          <li>
+            <strong>Datos técnicos de conexión:</strong> el servidor web puede registrar
+            dirección IP, hora y recurso solicitado en sus registros técnicos para
+            operar y diagnosticar el servicio. Su retención depende de la configuración
+            del alojamiento.
+          </li>
+        </ul>
+        <p>
+          El historial sintético de inventario y los datos usados para el pronóstico
+          son datos de demostración y no representan información personal de clientes.
+        </p>
+      </section>
+
+      <section>
+        <h2>3. Finalidades y consentimiento</h2>
+        <p>
+          El nombre, teléfono y dirección solo se utilizan para identificar el pedido
+          y facilitar el contacto o la coordinación de su entrega. Los datos del
+          pedido se usan para mantener el inventario, consultar el historial y producir
+          reportes. El sistema no usa esos datos para publicidad.
+        </p>
+        <p>
+          Antes de confirmar cualquier pedido debes marcar la casilla de autorización
+          que enlaza a esta política. La aplicación rechaza pedidos sin esa aceptación
+          expresa y registra la fecha y hora del consentimiento junto al pedido. El
+          nombre, teléfono y dirección siguen siendo opcionales; puedes dejarlos en
+          blanco y aceptar el tratamiento de los datos necesarios para registrar la
+          compra.
+        </p>
+        <p>
+          Los datos personales no se venden ni alquilan. No se ceden a terceros para
+          fines comerciales. Cuando el proyecto está alojado en la Nube Universitaria,
+          los datos se encuentran en su infraestructura únicamente para prestar el
+          alojamiento académico y conforme a sus reglas; cualquier otra comunicación
+          requiere autorización previa, salvo obligación legal aplicable.
+        </p>
+      </section>
+
+      <section>
+        <h2>4. Almacenamiento y medidas de seguridad</h2>
+        <p>
+          Los pedidos y datos de contacto se guardan en una base SQLite dentro del
+          volumen persistente de Docker. El acceso a las funciones administrativas
+          está protegido por autenticación y un token de sesión, y solo la cuenta
+          administrativa configurada puede consultar el historial. No existe un
+          sistema de múltiples roles.
+        </p>
+        <p>
+          La contraseña administrativa se suministra mediante variables de entorno:
+          la aplicación no la guarda en la base de datos ni la hashea actualmente.
+          El token se mantiene en la sesión del navegador y en memoria del servidor.
+          Por ello, el archivo local <code>.env</code> debe mantenerse privado y con
+          acceso restringido.
+        </p>
+        <p>
+          La configuración local de Docker usa HTTP en
+          <code>http://localhost:8080</code> y no cifra el tráfico con TLS. No ingreses
+          datos personales a través de una conexión pública sin HTTPS. Si la plataforma
+          se publica en la Nube Universitaria, el HTTPS/TLS debe estar habilitado y
+          confirmado por la configuración institucional de alojamiento.
+        </p>
+        <p>
+          El volumen de Docker conserva los datos, pero el proyecto no configura
+          respaldos periódicos automáticos ni cifrado de la base de datos en disco.
+          El responsable debe gestionar copias de seguridad protegidas si el entorno
+          de alojamiento lo requiere.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. Conservación, actualización y eliminación</h2>
+        <p>
+          Actualmente no hay una eliminación automática por antigüedad. Para consultar,
+          corregir o solicitar la eliminación de tus datos, escribe al correo de
+          contacto con el asunto <strong>“Solicitud de privacidad”</strong> e indica
+          el número del pedido y la acción solicitada. No envíes contraseñas ni
+          documentos sensibles por correo.
+        </p>
+        <p>
+          El responsable verificará la solicitud de manera razonable y la atenderá
+          manualmente. Si se solicita eliminar los datos de contacto, se quitarán del
+          pedido el nombre, teléfono, dirección y la marca de consentimiento; el
+          registro restante se conservará sin esos datos personales para mantener la
+          consistencia del historial de inventario y reportes. Los registros técnicos
+          administrados por el proveedor de alojamiento pueden requerir una solicitud
+          separada conforme a sus propias reglas de retención.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. Alojamiento académico y cambios</h2>
+        <p>
+          La UAJMS facilita únicamente el entorno de alojamiento académico cuando
+          esta aplicación se encuentra en la Nube Universitaria. El tratamiento de
+          los registros técnicos del servicio también puede estar sujeto a la Política
+          de Uso Aceptable (AUP) vigente. Esta página no sustituye la AUP ni las
+          disposiciones legales aplicables.
+        </p>
+        <p>
+          La política puede actualizarse cuando cambien las funciones o el entorno
+          de alojamiento. La versión vigente estará disponible en esta página.
+        </p>
+      </section>
+
+      <a class="terms-back-link" href="/">Volver al catálogo</a>
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">Vitis <span>& Co.</span></div>
+      <div class="footer-links">
+        <a href="/" class="footer-link">Catálogo</a>
+        <a href="/terms.html" class="footer-link">Términos y Condiciones de Uso</a>
+        <a href="/cookies.html" class="footer-link">Política de Cookies</a>
+        <a href="/admin.html" class="footer-link">Acceso Admin</a>
+      </div>
+      <p>Proyecto académico y demostrativo de Vitis & Co.</p>
+    </div>
+  </footer>
+  <script src="/js/storage-notice.js?v=storage-notice-20261124"></script>
+</body>
+
+</html>

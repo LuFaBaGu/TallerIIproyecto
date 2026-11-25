@@ -403,7 +403,7 @@ function renderAdminOrders() {
   if (adminOrders.length === 0) {
     const row = document.createElement('tr');
     const cell = document.createElement('td');
-    cell.colSpan = 6;
+    cell.colSpan = 7;
     cell.textContent = 'Todavía no hay pedidos registrados.';
     cell.style.textAlign = 'center';
     cell.style.padding = '3rem';
@@ -422,6 +422,21 @@ function renderAdminOrders() {
     const dateCell = document.createElement('td');
     dateCell.textContent = new Date(order.createdAt).toLocaleString('es');
     row.appendChild(dateCell);
+
+    const customerCell = document.createElement('td');
+    const customerDetails = [
+      ['Nombre', order.customer && order.customer.name],
+      ['Teléfono', order.customer && order.customer.phone],
+      ['Dirección', order.customer && order.customer.address]
+    ].filter(([, value]) => value).map(([label, value]) => `${label}: ${value}`);
+    if (order.customer && order.customer.consentAt) {
+      customerDetails.push(`Consentimiento: ${new Date(order.customer.consentAt).toLocaleString('es')}`);
+    }
+    customerCell.textContent = customerDetails.length
+      ? customerDetails.join('\n')
+      : 'No proporcionados';
+    customerCell.style.whiteSpace = 'pre-line';
+    row.appendChild(customerCell);
 
     const productsCell = document.createElement('td');
     if (order.items.length === 0) {

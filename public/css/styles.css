@@ -664,6 +664,7 @@ nav {
 
 .cart-items-container {
   flex-grow: 1;
+  min-height: 0;
   overflow-y: auto;
   padding: 1.5rem;
   display: flex;
@@ -730,6 +731,58 @@ nav {
   padding: 1.5rem;
   border-top: 1px solid var(--border-light);
   background-color: var(--bg-color);
+  max-height: 55vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.checkout-customer-fields {
+  margin-bottom: 1.25rem;
+}
+
+.checkout-customer-fields h3 {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.checkout-customer-fields h3 span,
+.checkout-customer-fields p {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.checkout-customer-fields label {
+  display: block;
+  margin: 0.5rem 0 0.25rem;
+  font-size: 0.85rem;
+}
+
+.checkout-customer-fields .form-control {
+  padding: 0.65rem 0.75rem;
+}
+
+.checkout-customer-fields p {
+  margin: 0.5rem 0 0;
+}
+
+.checkout-customer-fields .privacy-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+}
+
+.privacy-consent input {
+  flex: 0 0 auto;
+  margin-top: 0.3rem;
+  accent-color: var(--primary);
+}
+
+.privacy-consent a {
+  color: var(--primary);
+  text-decoration: underline;
 }
 
 .cart-total-row {
@@ -838,6 +891,68 @@ footer {
   margin: 2rem auto;
   padding: 0 5%;
   min-height: 70vh;
+}
+
+.terms-page {
+  max-width: 1000px;
+  min-height: 70vh;
+  margin: 3rem auto;
+  padding: 0 5%;
+}
+
+.terms-card {
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  background-color: var(--card-bg);
+  box-shadow: var(--shadow-md);
+}
+
+.terms-eyebrow,
+.terms-updated {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.terms-card h1,
+.terms-card h2 {
+  font-family: var(--font-serif);
+  color: var(--text-dark);
+}
+
+.terms-card h1 {
+  margin: 0.4rem 0;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.15;
+}
+
+.terms-card h2 {
+  margin: 2rem 0 0.65rem;
+  font-size: 1.6rem;
+}
+
+.terms-card p,
+.terms-card li {
+  color: var(--text-muted);
+}
+
+.terms-card p {
+  margin: 0.75rem 0;
+}
+
+.terms-card ul {
+  margin: 0.75rem 0 0.75rem 1.5rem;
+}
+
+.terms-card li {
+  margin: 0.35rem 0;
+}
+
+.terms-back-link {
+  display: inline-block;
+  margin-top: 2rem;
+  color: var(--primary);
+  font-weight: 600;
 }
 
 /* Formulario de Login */
@@ -1278,6 +1393,81 @@ footer {
   min-width: 520px;
 }
 
+.storage-notice {
+  position: fixed;
+  z-index: 1200;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: var(--shadow-lg);
+}
+
+.storage-notice-message {
+  max-width: 760px;
+  color: var(--text-dark);
+  font-size: 0.9rem;
+}
+
+.storage-notice-actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 1rem;
+}
+
+.storage-notice-link {
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.storage-notice-button {
+  padding: 0.65rem 1rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.storage-notice-button:hover {
+  background: var(--primary-hover);
+}
+
+.storage-notice-status {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--error);
+  font-size: 0.75rem;
+}
+
+.storage-notice-status:empty {
+  display: none;
+}
+
+.cookie-table-container {
+  margin: 1rem 0;
+}
+
+.cookie-table {
+  min-width: 680px;
+}
+
 /* Responsive general */
 @media (max-width: 768px) {
   header {
@@ -1318,6 +1508,21 @@ footer {
   }
   .report-toolbar .btn-secondary {
     margin-left: 0;
+  }
+  .storage-notice {
+    right: 0.75rem;
+    bottom: 0.75rem;
+    left: 0.75rem;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1rem;
+  }
+  .storage-notice-actions {
+    justify-content: space-between;
+  }
+  .storage-notice-status {
+    position: static;
   }
   .report-summary {
     grid-template-columns: 1fr;

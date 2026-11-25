@@ -17,6 +17,10 @@ const cartOverlay = document.getElementById('cart-overlay');
 const cartItemsContainer = document.getElementById('cart-items-container');
 const cartTotalPrice = document.getElementById('cart-total-price');
 const checkoutBtn = document.getElementById('checkout-btn');
+const customerNameInput = document.getElementById('checkout-customer-name');
+const customerPhoneInput = document.getElementById('checkout-customer-phone');
+const customerAddressInput = document.getElementById('checkout-customer-address');
+const privacyConsentInput = document.getElementById('checkout-privacy-consent');
 
 // Elementos del Modal
 const productModal = document.getElementById('product-modal');
@@ -81,6 +85,11 @@ function setupEventListeners() {
 async function handleCheckout() {
   if (cart.length === 0 || checkoutBtn.disabled) return;
 
+  if (!privacyConsentInput.checked) {
+    showToast('Acepta la Política de Privacidad para confirmar el pedido.', 'error');
+    return;
+  }
+
   checkoutBtn.disabled = true;
   checkoutBtn.textContent = 'Registrando pedido...';
 
@@ -89,7 +98,13 @@ async function handleCheckout() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        items: cart.map(item => ({ id: item.id, qty: item.qty }))
+        items: cart.map(item => ({ id: item.id, qty: item.qty })),
+        customer: {
+          name: customerNameInput.value,
+          phone: customerPhoneInput.value,
+          address: customerAddressInput.value
+        },
+        privacyConsent: privacyConsentInput.checked
       })
     });
 
@@ -107,6 +122,10 @@ async function handleCheckout() {
     cart = [];
     saveCart();
     updateCartUI();
+    customerNameInput.value = '';
+    customerPhoneInput.value = '';
+    customerAddressInput.value = '';
+    privacyConsentInput.checked = false;
     await fetchProducts();
     toggleCart(false);
     showToast(`Pedido #${data.order.id} confirmado. Total: $${data.order.total.toFixed(2)}.`, 'success');

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Política de cookies y almacenamiento del navegador de Vitis & Co.">
+  <title>Política de Cookies - Vitis & Co.</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+  <header>
+    <div class="logo-container">
+      <div class="logo-icon">V</div>
+      <div class="logo-text">Vitis <span>& Co.</span></div>
+    </div>
+    <nav>
+      <a href="/" class="nav-link">Volver al catálogo</a>
+    </nav>
+  </header>
+
+  <main class="terms-page">
+    <article class="terms-card">
+      <p class="terms-eyebrow">Vitis & Co. · Proyecto académico</p>
+      <h1>Política de Cookies y Almacenamiento</h1>
+      <p class="terms-updated">Última actualización: 24 de noviembre de 2026</p>
+      <p>
+        Esta página describe los datos que Vitis & Co. guarda en el navegador. La
+        aplicación actualmente no crea cookies HTTP ni utiliza cookies de analítica,
+        publicidad o seguimiento. Utiliza únicamente almacenamiento técnico del
+        navegador para ofrecer las funciones que se detallan a continuación.
+      </p>
+
+      <section>
+        <h2>1. Cookies activas</h2>
+        <p>
+          No hay cookies HTTP activas configuradas por esta aplicación. En particular,
+          el servidor no usa cookies para iniciar o mantener sesiones administrativas:
+          el token de sesión se conserva en <code>sessionStorage</code>.
+        </p>
+      </section>
+
+      <section>
+        <h2>2. Almacenamiento técnico activo</h2>
+        <div class="table-container cookie-table-container">
+          <table class="admin-table cookie-table">
+            <thead>
+              <tr>
+                <th>Tipo y clave</th>
+                <th>Finalidad</th>
+                <th>Duración</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>localStorage: vitis_cart</code></td>
+                <td>Conservar los productos del carrito entre visitas.</td>
+                <td>Hasta que se borre el almacenamiento del sitio o el usuario limpie el carrito.</td>
+              </tr>
+              <tr>
+                <td><code>sessionStorage: vitis_admin_token</code></td>
+                <td>Mantener la sesión de administración autenticada en la pestaña actual.</td>
+                <td>Se elimina al cerrar sesión o al terminar la sesión de la pestaña. El servidor no establece una expiración por tiempo; invalida el token al cerrar sesión o reiniciar el proceso.</td>
+              </tr>
+              <tr>
+                <td><code>localStorage: vitis_storage_notice_preference</code></td>
+                <td>Recordar que se aceptó este aviso y evitar mostrarlo en cada recarga.</td>
+                <td>180 días desde la aceptación; después se vuelve a mostrar el aviso.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Estos elementos son necesarios para el funcionamiento del carrito, la sesión
+          administrativa y la preferencia del aviso. No se usan para perfilar al
+          visitante. Se pueden borrar desde la configuración de datos del sitio en el
+          navegador; al hacerlo, el carrito se vaciará, la sesión administrativa
+          terminará o el aviso volverá a aparecer, según corresponda.
+        </p>
+      </section>
+
+      <section>
+        <h2>3. Recursos externos</h2>
+        <p>
+          La hoja de estilos solicita tipografías a Google Fonts. Esto hace que el
+          navegador contacte ese servicio para descargar los recursos tipográficos;
+          Vitis & Co. no configura cookies de analítica o publicidad para esa función.
+          Si se bloquean esos recursos, se usarán las tipografías alternativas del
+          dispositivo.
+        </p>
+      </section>
+
+      <section>
+        <h2>4. Preferencia del aviso</h2>
+        <p>
+          En la primera visita se muestra un aviso discreto con un botón para aceptar
+          y cerrar y un enlace directo a esta política. No se ofrece una opción de
+          rechazo porque la aplicación no incorpora cookies opcionales de analítica,
+          publicidad o seguimiento. La aceptación se guarda localmente durante 180
+          días. Si el almacenamiento está bloqueado, el aviso puede volver a aparecer
+          en una visita posterior.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. Cambios y contacto</h2>
+        <p>
+          Si se incorporan cookies opcionales o tecnologías de terceros que requieran
+          una elección, esta política y las opciones del aviso se actualizarán antes
+          de utilizarlas. Para consultas sobre privacidad y tratamiento de datos,
+          escribe a <a href="mailto:darelik015@gmail.com">darelik015@gmail.com</a> y
+          consulta también la <a href="/privacy.html">Política de Privacidad</a>.
+        </p>
+      </section>
+
+      <a class="terms-back-link" href="/">Volver al catálogo</a>
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">Vitis <span>& Co.</span></div>
+      <div class="footer-links">
+        <a href="/" class="footer-link">Catálogo</a>
+        <a href="/terms.html" class="footer-link">Términos y Condiciones de Uso</a>
+        <a href="/privacy.html" class="footer-link">Política de Privacidad</a>
+        <a href="/admin.html" class="footer-link">Acceso Admin</a>
+      </div>
+      <p>Proyecto académico y demostrativo de Vitis & Co.</p>
+    </div>
+  </footer>
+  <script src="/js/storage-notice.js?v=storage-notice-20261124"></script>
+</body>
+
+</html>
